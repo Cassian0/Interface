@@ -1,4 +1,4 @@
-package br.com.Senac_Com_Padrao.model;
+package br.com.Interface.model;
 
 public class Motorcycle extends Vehicle {
 
@@ -9,7 +9,7 @@ public class Motorcycle extends Vehicle {
 
     }
 
-    public Motorcycle(String power, Integer id, String model, String brand, String plate, double value, double ipva) {
+    public Motorcycle(Integer id, String power, String model, String brand, String plate, double value, double ipva) {
         super(id, "Motorcycle", model, brand, plate, value, ipva);
         this.power = power;
     }

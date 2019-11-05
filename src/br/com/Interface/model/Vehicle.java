@@ -1,4 +1,4 @@
-package br.com.Senac_Com_Padrao.model;
+package br.com.Interface.model;
 
 import java.io.Serializable;
 

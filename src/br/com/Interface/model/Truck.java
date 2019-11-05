@@ -1,4 +1,4 @@
-package br.com.Senac_Com_Padrao.model;
+package br.com.Interface.model;
 
 public class Truck extends Vehicle {
 
@@ -9,7 +9,7 @@ public class Truck extends Vehicle {
 
     }
 
-    public Truck(String axis, Integer id, String model, String brand, String plate, double value, double ipva) {
+    public Truck(Integer id, String axis, String model, String brand, String plate, double value, double ipva) {
         super(id, "Truck", model, brand, plate, value, ipva);
         this.axis = axis;
     }

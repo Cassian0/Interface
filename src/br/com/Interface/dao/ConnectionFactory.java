@@ -1,5 +1,5 @@
 
-package br.com.Senac_Com_Padrao.dao;
+package br.com.Interface.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +13,12 @@ public class ConnectionFactory {
 
    // METODO UTILIZADO PARA ABRIR CONEXÃO COM O BANCO
 
-    public static Connection openConnection() throws Exception { // METODO UTILIZADO PARA ABRIR CONEXÃO COM O BANCO
+    public static Connection getConnection() throws Exception { // METODO UTILIZADO PARA ABRIR CONEXÃO COM O BANCO
         // FORNAME É O METODO DENTRO DA CLASSE (CLASS)
         Class.forName("com.mysql.jdbc.Driver");
         // IMPORTAR DRIVER JDBC DA BIBLIOTECA
         return DriverManager.
-                getConnection("jdbc:mysql://localhost:3306/SistemaVeiculo",
+                getConnection("jdbc:mysql://localhost:3306/Interface",
                         "root", "");
     }
 

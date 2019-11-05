@@ -1,6 +1,6 @@
 package controller;
 
-import br.com.Senac_Com_Padrao.model.Vehicle;
+import br.com.Interface.model.Vehicle;
 
 public interface calculateIpva {
 

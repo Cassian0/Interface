@@ -1,7 +1,9 @@
-package br.com.Senac_Com_Padrao.dao;
+package br.com.Interface.dao;
 
-import br.com.Senac_Com_Padrao.model.Car;
-import br.com.Senac_Com_Padrao.model.Vehicle;
+import br.com.Interface.dao.CarDaoImpl;
+import br.com.Interface.dao.CarDao;
+import br.com.Interface.model.Car;
+import br.com.Interface.model.Vehicle;
 import controller.calculateIpva;
 import java.util.List;
 import org.junit.Test;
@@ -16,35 +18,34 @@ public class CarDaoImplTest implements calculateIpva {
         carDao = new CarDaoImpl();
     }
 
-   /* @Test
+    @Test
     public void testSave() throws Exception {
         System.out.println("save");
-        car = new Car(doorNumber, Integer.SIZE, model, brand, plate, 0, 0);
+        car = new Car(null, "5", "Palio", "Fiat", "MCD-1234", 15000, 0);
         calculateIpva(car);
-    
-     
-    
+        carDao.save(car);
+
     }
 
-    @Test
+    //@Test
     public void testChange() throws Exception {
     }
 
-    @Test
+    //@Test
     public void testDelete() throws Exception {
     }
 
-    @Test
+    //@Test
     public void testSearchById() throws Exception {
     }
 
-    @Test
+    // @Test
     public void testSearchByName() throws Exception {
     }
 
     @Override
     public void calculateIpva(Vehicle vehicle) {
-        vehicle.setIpva(0);
+        vehicle.setIpva(vehicle.getValue() * 0.03);
     }
-*/
+
 }
