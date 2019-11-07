@@ -18,6 +18,4 @@ public interface BaseDao {
 
     public abstract Object searchById(int id) throws SQLException;
 
-    public abstract List searchByModel(String model) throws SQLException;
-
 }

@@ -13,6 +13,7 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
 
     @Override
     public void save(Object object) throws SQLException {
+        Bus bus = (Bus) object;
         super.save(bus);
         String query = "INSERT INTO bus (seat, idVehicle)"
                 + " VALUES (?,?)";
@@ -30,6 +31,7 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
 
     @Override
     public void change(Object object) throws SQLException {
+        Bus bus = (Bus) object;
         super.change(bus);
         String query = "UPDATE bus SET seat = ? WHERE idVehicle = ?";
         try {
@@ -105,7 +107,6 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
         return bus;
     }
 
-    @Override
     public List searchByModel(String model) throws SQLException {
         dataBus = new ArrayList<>();
         String query = "SELECT * FROM vehicle INNER JOIN bus ON vehicle.id = "

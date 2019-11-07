@@ -16,14 +16,13 @@ public class Vehicle implements Serializable {
 
     }
 
-    public Vehicle(Integer id, String type, String model, String brand, String plate, double value, double ipva) {
+    public Vehicle(Integer id, String type, String model, String brand, String plate, double value) {
         this.id = id;
         this.type = type;
         this.model = model;
         this.brand = brand;
         this.plate = plate;
         this.value = value;
-        this.ipva = ipva;
     }
 
     public Integer getId() {

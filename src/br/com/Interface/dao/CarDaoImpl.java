@@ -34,7 +34,7 @@ public class CarDaoImpl extends VehicleDaoImpl implements CarDao, Serializable {
         super.change(car);
         String query = "UPDATE car SET doorNumber = ? WHERE idVehicle = ?";
         try {
-            prepared = connection.prepareCall(query);
+            prepared = connection.prepareStatement(query);
             prepared.setString(1, car.getDoorNumber());
             prepared.setInt(2, car.getId());
             prepared.executeUpdate();

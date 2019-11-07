@@ -9,6 +9,10 @@ import java.sql.Statement;
 
 public abstract class VehicleDaoImpl {
 
+    /*
+    COM O RESULTSET / CONNECTION / PREPAREDSTATEMENT / COM PROTECTED
+    CONSIGO UTILIZA - LO NAS CLASSES FILHAS SEM INSTANCIAR
+    */
     protected Connection connection;
     protected PreparedStatement prepared;
     protected ResultSet result;

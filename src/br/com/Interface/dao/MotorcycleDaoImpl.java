@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, Serializable {
-
+    
     private Motorcycle motorcycle;
     private List<Motorcycle> dataMotor;
-
+    
     @Override
     public void save(Object object) throws SQLException {
+        Motorcycle motorcycle = (Motorcycle) object;
         super.save(motorcycle);
         String query = "INSERT INTO motorcycle (power, idVehicle)"
                 + " VALUES (?,?)";
@@ -27,9 +28,10 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
             ConnectionFactory.closeConnection(connection, prepared, result);
         }
     }
-
+    
     @Override
     public void change(Object object) throws SQLException {
+        Motorcycle motorcycle = (Motorcycle) object;
         super.change(motorcycle);
         String query = "UPDATE motorcycle SET power = ? WHERE idVehicle = ?";
         try {
@@ -43,12 +45,12 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
             ConnectionFactory.closeConnection(connection, prepared);
         }
     }
-
+    
     @Override
     public void delete(int id) throws SQLException {
         super.delete(id);
     }
-
+    
     @Override
     public List listAll() throws SQLException {
         dataMotor = new ArrayList<>();
@@ -77,7 +79,7 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
         }
         return dataMotor;
     }
-
+    
     @Override
     public Object searchById(int id) throws SQLException {
         motorcycle = new Motorcycle();
@@ -104,7 +106,7 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
         }
         return motorcycle;
     }
-
+    
     @Override
     public List searchByModel(String model) throws SQLException {
         dataMotor = new ArrayList<>();
@@ -134,5 +136,5 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
         }
         return dataMotor;
     }
-
+    
 }

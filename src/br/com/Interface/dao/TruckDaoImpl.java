@@ -13,6 +13,7 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
 
     @Override
     public void save(Object object) throws SQLException {
+        Truck truck = (Truck) object;
         super.save(truck);
         String query = "INSERT INTO truck (axis, idVehicle)"
                 + " VALUES (?,?)";
@@ -30,6 +31,7 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
 
     @Override
     public void change(Object object) throws SQLException {
+        Truck truck = (Truck) object;
         super.change(truck);
         String query = "UPDATE truck SET axis = ? WHERE idVehicle = ?";
         try {
@@ -105,7 +107,6 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
         return truck;
     }
 
-    @Override
     public List searchByModel(String model) throws SQLException {
         dataTruck = new ArrayList<>();
         String query = "SELECT * FROM vehicle INNER JOIN truck ON vehicle.id = "

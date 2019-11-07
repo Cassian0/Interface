@@ -13,39 +13,89 @@ public class CarDaoImplTest implements calculateIpva {
 
     private Car car;
     private CarDao carDao;
+    private List<Car> dataCar;
 
     public CarDaoImplTest() {
         carDao = new CarDaoImpl();
     }
 
-    @Test
+   // @Test
     public void testSave() throws Exception {
-        System.out.println("save");
-        car = new Car(null, "5", "Palio", "Fiat", "MCD-1234", 15000, 0);
-        calculateIpva(car);
+        System.out.println("Salvar:");
+        car = new Car(null, "5", "Palio", "Fiat", "MCD-1234", 15000);
+        calculateIpva();
         carDao.save(car);
-
     }
 
     //@Test
     public void testChange() throws Exception {
+        System.out.println("Alterar:");
+        int id = 4;
+        car = new Car(id, "3", "Corsa", "Chevrolet", "TTT-000", 100);
+        calculateIpva();
+        carDao.change(car);
     }
 
     //@Test
     public void testDelete() throws Exception {
+        System.out.println("Deletar:");
+        int id = 4;
+        carDao.delete(id);
+    }
+
+    @Test
+    public void testListAll() throws Exception {
+        System.out.println("Listar Todos:");
+        dataCar = carDao.listAll();
+        for (Car car1 : dataCar) {
+            System.out.println("ID: " + car1.getId());
+            System.out.println("Numero de Portas: " + car1.getDoorNumber());
+            System.out.println("Tipo: " + car1.getType());
+            System.out.println("Modelo: " + car1.getModel());
+            System.out.println("Fabricante: " + car1.getBrand());
+            System.out.println("Placa: " + car1.getPlate());
+            System.out.println("Valor: " + car1.getValue());
+            System.out.println("IPVA: " + car1.getIpva());
+            System.out.println();
+        }
     }
 
     //@Test
     public void testSearchById() throws Exception {
+        System.out.println("Pesquisar por ID:");
+        int id = 5;
+        car = (Car) carDao.searchById(id); // CASTING
+        System.out.println("ID: " + car.getId());
+        System.out.println("Numero de Portas: " + car.getDoorNumber());
+        System.out.println("Tipo: " + car.getType());
+        System.out.println("Modelo: " + car.getModel());
+        System.out.println("Fabricante: " + car.getBrand());
+        System.out.println("Placa: " + car.getPlate());
+        System.out.println("Valor: " + car.getValue());
+        System.out.println("IPVA: " + car.getIpva());
     }
 
     // @Test
-    public void testSearchByName() throws Exception {
+    public void testSearchByModel() throws Exception {
+        System.out.println("Pesquisar por Modelo:");
+        String model = "";
+        dataCar = carDao.searchByModel(model);
+        for (Car car1 : dataCar) {
+            System.out.println("ID: " + car1.getId());
+            System.out.println("Numero de Portas: " + car1.getDoorNumber());
+            System.out.println("Tipo: " + car1.getType());
+            System.out.println("Modelo: " + car1.getModel());
+            System.out.println("Fabricante: " + car1.getBrand());
+            System.out.println("Placa: " + car1.getPlate());
+            System.out.println("Valor: " + car1.getValue());
+            System.out.println("IPVA: " + car1.getIpva());
+            System.out.println();
+        }
     }
 
     @Override
-    public void calculateIpva(Vehicle vehicle) {
-        vehicle.setIpva(vehicle.getValue() * 0.03);
+    public void calculateIpva() {
+        car.setIpva(car.getValue() * 0.03);
     }
 
 }
