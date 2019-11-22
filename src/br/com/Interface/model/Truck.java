@@ -9,8 +9,8 @@ public class Truck extends Vehicle {
 
     }
 
-    public Truck(Integer id, String axis, String model, String brand, String plate, double value) {
-        super(id, "Truck", model, brand, plate, value);
+    public Truck(Integer id, String axis, String model, String brand, String renavam, String plate, double value) {
+        super(id, "Truck", model, brand, renavam, plate, value);
         this.axis = axis;
     }
 

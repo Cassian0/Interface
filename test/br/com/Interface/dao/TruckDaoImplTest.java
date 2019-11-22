@@ -2,7 +2,7 @@ package br.com.Interface.dao;
 
 import br.com.Interface.model.Truck;
 import br.com.Interface.model.Vehicle;
-import controller.calculateIpva;
+import br.com.Interface.controller.calculateIpva;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,7 +20,7 @@ public class TruckDaoImplTest implements calculateIpva {
     //@Test
     public void testSave() throws Exception {
         System.out.println("Salvar:");
-        truck = new Truck(null, "8", "caminhao", "mercedes", "III-1244", 80000);
+        truck = new Truck(null, "8", "caminhao", "mercedes", "", "III-1244", 80000);
         calculateIpva();
         truckDao.save(truck);
     }
@@ -29,7 +29,7 @@ public class TruckDaoImplTest implements calculateIpva {
     public void testChange() throws Exception {
         System.out.println("Alterar");
         int id = 9;
-        truck = new Truck(id, "12", "caminhao2", "mercedes", "III-7777", 90000);
+        truck = new Truck(id, "12", "caminhao2", "mercedes", "", "III-7777", 90000);
         calculateIpva();
         truckDao.change(truck);
     }
@@ -51,6 +51,7 @@ public class TruckDaoImplTest implements calculateIpva {
             System.out.println("Tipo: " + truck1.getType());
             System.out.println("Modelo: " + truck1.getModel());
             System.out.println("Fabricante: " + truck1.getBrand());
+            System.out.println("Renavam: " + truck1.getRenavam());
             System.out.println("Placa: " + truck1.getPlate());
             System.out.println("Valor: " + truck1.getValue());
             System.out.println("IPVA: " + truck1.getIpva());
@@ -58,7 +59,7 @@ public class TruckDaoImplTest implements calculateIpva {
         }
     }
 
-   //@Test
+    //@Test
     public void testSearchById() throws Exception {
         System.out.println("Pesquisar por ID:");
         int id = 9;
@@ -68,22 +69,44 @@ public class TruckDaoImplTest implements calculateIpva {
         System.out.println("Tipo: " + truck.getType());
         System.out.println("Modelo: " + truck.getModel());
         System.out.println("Fabricante: " + truck.getBrand());
+        System.out.println("Renavam: " + truck.getRenavam());
         System.out.println("Placa: " + truck.getPlate());
         System.out.println("Valor: " + truck.getValue());
         System.out.println("IPVA: " + truck.getIpva());
     }
 
     //@Test
-    public void testSearchByModel() throws Exception {
-        System.out.println("Pesquisar por Modelo:");
+    public void testSearchByModelAndBrand() throws Exception {
+        System.out.println("Pesquisar por Modelo e fabricante:");
         String model = "";
-        dataTruck = truckDao.searchByModel(model);
+        String brand = "";
+        dataTruck = truckDao.searchByModelAndBrand(model, brand);
         for (Truck truck1 : dataTruck) {
             System.out.println("ID: " + truck1.getId());
             System.out.println("Eixos: " + truck1.getAxis());
             System.out.println("Tipo: " + truck1.getType());
             System.out.println("Modelo: " + truck1.getModel());
             System.out.println("Fabricante: " + truck1.getBrand());
+            System.out.println("Renavam: " + truck1.getRenavam());
+            System.out.println("Placa: " + truck1.getPlate());
+            System.out.println("Valor: " + truck1.getValue());
+            System.out.println("IPVA: " + truck1.getIpva());
+            System.out.println();
+        }
+    }
+
+    //@Test
+    public void testSearchByIpva() throws Exception {
+        System.out.println("Pesquisar por ipva:");
+        double ipva = 0;
+        dataTruck = truckDao.searchByYpva(ipva);
+        for (Truck truck1 : dataTruck) {
+            System.out.println("ID: " + truck1.getId());
+            System.out.println("Eixos: " + truck1.getAxis());
+            System.out.println("Tipo: " + truck1.getType());
+            System.out.println("Modelo: " + truck1.getModel());
+            System.out.println("Fabricante: " + truck1.getBrand());
+            System.out.println("Renavam: " + truck1.getRenavam());
             System.out.println("Placa: " + truck1.getPlate());
             System.out.println("Valor: " + truck1.getValue());
             System.out.println("IPVA: " + truck1.getIpva());

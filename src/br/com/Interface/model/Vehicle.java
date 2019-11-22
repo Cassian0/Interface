@@ -8,6 +8,7 @@ public class Vehicle implements Serializable {
     protected String type;
     protected String model;
     protected String brand;
+    protected String renavam;
     protected String plate;
     protected double value;
     protected double ipva;
@@ -16,11 +17,12 @@ public class Vehicle implements Serializable {
 
     }
 
-    public Vehicle(Integer id, String type, String model, String brand, String plate, double value) {
+    public Vehicle(Integer id, String type, String model, String brand, String renavam, String plate, double value) {
         this.id = id;
         this.type = type;
         this.model = model;
         this.brand = brand;
+        this.renavam = renavam;
         this.plate = plate;
         this.value = value;
     }
@@ -79,6 +81,14 @@ public class Vehicle implements Serializable {
 
     public void setIpva(double ipva) {
         this.ipva = ipva;
+    }
+
+    public String getRenavam() {
+        return renavam;
+    }
+
+    public void setRenavam(String renavam) {
+        this.renavam = renavam;
     }
 
 }

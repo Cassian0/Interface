@@ -1,6 +1,4 @@
-package controller;
-
-import br.com.Interface.model.Vehicle;
+package br.com.Interface.controller;
 
 public interface calculateIpva {
 

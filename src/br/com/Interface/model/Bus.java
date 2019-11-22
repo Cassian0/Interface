@@ -9,8 +9,8 @@ public class Bus extends Vehicle {
 
     }
 
-    public Bus(Integer id, String seat, String model, String brand, String plate, double value) {
-        super(id, "Bus", model, brand, plate, value);
+    public Bus(Integer id, String seat, String model, String brand, String renavam, String plate, double value) {
+        super(id, "Bus", model, brand, renavam, plate, value);
         this.seat = seat;
     }
 

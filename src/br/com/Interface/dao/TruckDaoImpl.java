@@ -12,8 +12,8 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
     private List<Truck> dataTruck;
 
     @Override
-    public void save(Object object) throws SQLException {
-        Truck truck = (Truck) object;
+    public void save(Object object) throws SQLException, Exception {
+        truck = (Truck) object;
         super.save(truck);
         String query = "INSERT INTO truck (axis, idVehicle)"
                 + " VALUES (?,?)";
@@ -31,7 +31,7 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
 
     @Override
     public void change(Object object) throws SQLException {
-        Truck truck = (Truck) object;
+        truck = (Truck) object;
         super.change(truck);
         String query = "UPDATE truck SET axis = ? WHERE idVehicle = ?";
         try {
@@ -107,14 +107,16 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
         return truck;
     }
 
-    public List searchByModel(String model) throws SQLException {
+    public List searchByModelAndBrand(String model, String brand) throws SQLException {
         dataTruck = new ArrayList<>();
-        String query = "SELECT * FROM vehicle INNER JOIN truck ON vehicle.id = "
-                + "truck.idVehicle WHERE model LIKE ?";
+        String query = "SELECT * FROM vehicle INNER JOIN truck "
+                + "ON vehicle.id = truck.idVehicle "
+                + "WHERE model like ? or brand like ?";
         try {
             connection = ConnectionFactory.getConnection();
             prepared = connection.prepareStatement(query);
             prepared.setString(1, "%" + model + "%");
+            prepared.setString(2, "%" + brand + "%");
             result = prepared.executeQuery();
             while (result.next()) {
                 truck = new Truck();
@@ -129,7 +131,68 @@ public class TruckDaoImpl extends VehicleDaoImpl implements TruckDao, Serializab
                 dataTruck.add(truck);
             }
         } catch (Exception e) {
-            System.out.println("ERRO AO PESQUISAR CAMINHAO POR MODELO " + e.getMessage());
+            System.out.println("ERRO AO PESQUISAR CAMINHAO POR MODELO E POR FABRICANTE " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataTruck;
+    }
+
+   /* @Override
+    public List searchByBrand(String brand) throws SQLException {
+        dataTruck = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN truck ON vehicle.id = "
+                + "truck.idVehicle WHERE brand LIKE ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setString(1, "%" + brand + "%");
+            result = prepared.executeQuery();
+            while (result.next()) {
+                truck = new Truck();
+                truck.setId(result.getInt("truck.idVehicle"));
+                truck.setAxis(result.getString("axis"));
+                truck.setType(result.getString("type"));
+                truck.setModel(result.getString("model"));
+                truck.setBrand(result.getString("brand"));
+                truck.setPlate(result.getString("plate"));
+                truck.setValue(result.getDouble("value"));
+                truck.setIpva(result.getDouble("ipva"));
+                dataTruck.add(truck);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR CAMINHAO POR FABRICANTE " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataTruck;
+    }
+    */
+    
+    @Override
+    public List searchByYpva(double ipva) throws SQLException {
+        dataTruck = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN truck ON vehicle.id = "
+                + "truck.idVehicle WHERE ipva > ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setDouble(1, ipva);
+            result = prepared.executeQuery();
+            while (result.next()) {
+                truck = new Truck();
+                truck.setId(result.getInt("truck.idVehicle"));
+                truck.setAxis(result.getString("axis"));
+                truck.setType(result.getString("type"));
+                truck.setModel(result.getString("model"));
+                truck.setBrand(result.getString("brand"));
+                truck.setPlate(result.getString("plate"));
+                truck.setValue(result.getDouble("value"));
+                truck.setIpva(result.getDouble("ipva"));
+                dataTruck.add(truck);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR CAMINHAO POR IPVA " + e.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, prepared, result);
         }

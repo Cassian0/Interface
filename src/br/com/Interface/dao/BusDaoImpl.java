@@ -12,8 +12,8 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
     private List<Bus> dataBus;
 
     @Override
-    public void save(Object object) throws SQLException {
-        Bus bus = (Bus) object;
+    public void save(Object object) throws SQLException, Exception {
+        bus = (Bus) object;
         super.save(bus);
         String query = "INSERT INTO bus (seat, idVehicle)"
                 + " VALUES (?,?)";
@@ -31,7 +31,7 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
 
     @Override
     public void change(Object object) throws SQLException {
-        Bus bus = (Bus) object;
+        bus = (Bus) object;
         super.change(bus);
         String query = "UPDATE bus SET seat = ? WHERE idVehicle = ?";
         try {
@@ -107,14 +107,16 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
         return bus;
     }
 
-    public List searchByModel(String model) throws SQLException {
+    public List searchByModelAndBrand(String model, String brand) throws SQLException {
         dataBus = new ArrayList<>();
-        String query = "SELECT * FROM vehicle INNER JOIN bus ON vehicle.id = "
-                + "bus.idVehicle WHERE model LIKE ?";
+        String query = "SELECT * FROM vehicle INNER JOIN bus "
+                + "ON vehicle.id = bus.idVehicle "
+                + "WHERE model like ? or brand like ?";
         try {
             connection = ConnectionFactory.getConnection();
             prepared = connection.prepareStatement(query);
             prepared.setString(1, "%" + model + "%");
+            prepared.setString(2, "%" + brand + "%");
             result = prepared.executeQuery();
             while (result.next()) {
                 bus = new Bus();
@@ -129,11 +131,70 @@ public class BusDaoImpl extends VehicleDaoImpl implements BusDao, Serializable {
                 dataBus.add(bus);
             }
         } catch (Exception e) {
-            System.out.println("ERRO AO PESQUISAR ONIBUS POR MODELO " + e.getMessage());
+            System.out.println("ERRO AO PESQUISAR ONIBUS POR MODELO  E POR FABRICANTE " + e.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, prepared, result);
         }
         return dataBus;
+    }
+
+    /* @Override
+    public List searchByBrand(String brand) throws SQLException {
+        dataBus = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN bus ON vehicle.id = "
+                + "bus.idVehicle WHERE brand LIKE ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setString(1, "%" + brand + "%");
+            result = prepared.executeQuery();
+            while (result.next()) {
+                bus = new Bus();
+                bus.setId(result.getInt("bus.idVehicle"));
+                bus.setSeat(result.getString("seat"));
+                bus.setType(result.getString("type"));
+                bus.setModel(result.getString("model"));
+                bus.setPlate(result.getString("plate"));
+                bus.setValue(result.getDouble("value"));
+                bus.setIpva(result.getDouble("ipva"));
+                dataBus.add(bus);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR ONIBUS POR FABRICANTE " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataBus;
+    }
+     */
+    @Override
+    public List searchByYpva(double ipva) throws SQLException {
+        dataBus = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN bus ON vehicle.id = "
+                + "bus.idVehicle WHERE ipva > ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setDouble(1, ipva);
+            result = prepared.executeQuery();
+            while (result.next()) {
+                bus = new Bus();
+                bus.setId(result.getInt("bus.idVehicle"));
+                bus.setSeat(result.getString("seat"));
+                bus.setType(result.getString("type"));
+                bus.setModel(result.getString("model"));
+                bus.setPlate(result.getString("plate"));
+                bus.setValue(result.getDouble("value"));
+                bus.setIpva(result.getDouble("ipva"));
+                dataBus.add(bus);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR ONIBUS POR IPVA " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataBus;
+
     }
 
 }

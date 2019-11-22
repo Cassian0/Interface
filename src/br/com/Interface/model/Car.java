@@ -8,8 +8,8 @@ public class Car extends Vehicle {
         type = "Car";
     }
 
-    public Car(Integer id, String doorNumber, String model, String brand, String plate, double value) {
-        super(id, "Car", model, brand, plate, value);
+    public Car(Integer id, String doorNumber, String model, String brand, String renavam, String plate, double value) {
+        super(id, "Car", model, brand, renavam, plate, value);
         this.doorNumber = doorNumber;
     }
 

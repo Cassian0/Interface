@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, Serializable {
-    
+
     private Motorcycle motorcycle;
     private List<Motorcycle> dataMotor;
-    
+
     @Override
-    public void save(Object object) throws SQLException {
-        Motorcycle motorcycle = (Motorcycle) object;
+    public void save(Object object) throws SQLException, Exception {
+        motorcycle = (Motorcycle) object;
         super.save(motorcycle);
         String query = "INSERT INTO motorcycle (power, idVehicle)"
                 + " VALUES (?,?)";
@@ -28,10 +28,10 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
             ConnectionFactory.closeConnection(connection, prepared, result);
         }
     }
-    
+
     @Override
     public void change(Object object) throws SQLException {
-        Motorcycle motorcycle = (Motorcycle) object;
+        motorcycle = (Motorcycle) object;
         super.change(motorcycle);
         String query = "UPDATE motorcycle SET power = ? WHERE idVehicle = ?";
         try {
@@ -45,12 +45,12 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
             ConnectionFactory.closeConnection(connection, prepared);
         }
     }
-    
+
     @Override
     public void delete(int id) throws SQLException {
         super.delete(id);
     }
-    
+
     @Override
     public List listAll() throws SQLException {
         dataMotor = new ArrayList<>();
@@ -79,7 +79,7 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
         }
         return dataMotor;
     }
-    
+
     @Override
     public Object searchById(int id) throws SQLException {
         motorcycle = new Motorcycle();
@@ -106,16 +106,18 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
         }
         return motorcycle;
     }
-    
+
     @Override
-    public List searchByModel(String model) throws SQLException {
+    public List searchByModelAndBrand(String model, String brand) throws SQLException {
         dataMotor = new ArrayList<>();
-        String query = "SELECT * FROM vehicle INNER JOIN motorcycle ON vehicle.id = "
-                + "motorcycle.idVehicle WHERE model LIKE ?";
+        String query = "SELECT * FROM vehicle INNER JOIN motorcycle "
+                + "ON vehicle.id = motorcycle.idVehicle "
+                + "WHERE model like ? or brand like ?";
         try {
             connection = ConnectionFactory.getConnection();
             prepared = connection.prepareStatement(query);
             prepared.setString(1, "%" + model + "%");
+            prepared.setString(2, "%" + brand + "%");
             result = prepared.executeQuery();
             while (result.next()) {
                 motorcycle = new Motorcycle();
@@ -130,11 +132,71 @@ public class MotorcycleDaoImpl extends VehicleDaoImpl implements MotorcycleDao, 
                 dataMotor.add(motorcycle);
             }
         } catch (Exception e) {
-            System.out.println("ERRO AO PESQUISAR MOTOCICLETA POR MODELO " + e.getMessage());
+            System.out.println("ERRO AO PESQUISAR MOTOCICLETA POR MODELO  E POR FABRICANTE " + e.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, prepared, result);
         }
         return dataMotor;
     }
-    
+
+    /* @Override
+    public List searchByBrand(String brand) throws SQLException {
+        dataMotor = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN motorcycle ON vehicle.id = "
+                + "motorcycle.idVehicle WHERE brand LIKE ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setString(1, "%" + brand + "%");
+            result = prepared.executeQuery();
+            while (result.next()) {
+                motorcycle = new Motorcycle();
+                motorcycle.setId(result.getInt("motorcycle.idVehicle"));
+                motorcycle.setPower(result.getString("power"));
+                motorcycle.setType(result.getString("type"));
+                motorcycle.setModel(result.getString("model"));
+                motorcycle.setBrand(result.getString("brand"));
+                motorcycle.setPlate(result.getString("plate"));
+                motorcycle.setValue(result.getDouble("value"));
+                motorcycle.setIpva(result.getDouble("ipva"));
+                dataMotor.add(motorcycle);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR MOTOCICLETA POR FABRICANTE " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataMotor;
+    }
+     */
+    @Override
+    public List searchByYpva(double ipva) throws SQLException {
+        dataMotor = new ArrayList<>();
+        String query = "SELECT * FROM vehicle INNER JOIN motorcycle ON vehicle.id = "
+                + "motorcycle.idVehicle WHERE ipva > ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            prepared = connection.prepareStatement(query);
+            prepared.setDouble(1, ipva);
+            result = prepared.executeQuery();
+            while (result.next()) {
+                motorcycle = new Motorcycle();
+                motorcycle.setId(result.getInt("motorcycle.idVehicle"));
+                motorcycle.setPower(result.getString("power"));
+                motorcycle.setType(result.getString("type"));
+                motorcycle.setModel(result.getString("model"));
+                motorcycle.setBrand(result.getString("brand"));
+                motorcycle.setPlate(result.getString("plate"));
+                motorcycle.setValue(result.getDouble("value"));
+                motorcycle.setIpva(result.getDouble("ipva"));
+                dataMotor.add(motorcycle);
+            }
+        } catch (Exception e) {
+            System.out.println("ERRO AO PESQUISAR MOTOCICLETA POR IPVA " + e.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, prepared, result);
+        }
+        return dataMotor;
+    }
+
 }
